@@ -1,9 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SmartDataLakeBuilder" type="Application" factoryName="Application">
+    <classpathModifications>
+      <entry path="C:\local\git\sdl-examples.git\target\sdl-examples-2.5.2-jar-with-dependencies.jar" />
+    </classpathModifications>
     <envs>
       <env name="PYSPARK_PYTHON" value="python" />
       <env name="PYTHONPATH" value="../venv/Lib/site-packages" />
-      <env name="PATH" value="../venv/Scripts;$PATH$" />
+      <env name="java.library.path" value="../venv/Scripts;%PATH%" />
     </envs>
     <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
     <option name="MAIN_CLASS_NAME" value="io.smartdatalake.app.LocalSmartDataLakeBuilder" />
