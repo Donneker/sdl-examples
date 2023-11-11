@@ -32,15 +32,31 @@
 		  If version cannot be resolved, make sure maven central repository is defined in settings.xml and the corresponding profile activated.
 		  If version in IntelliJ still cannot be resolved, a restart of IntelliJ might help!
 		-->
-		<version>2.1.1-SNAPSHOT</version>
+		<version>2.5.2</version>
 	</parent>
 
 	<artifactId>sdl-examples</artifactId>
 
 	<name>Smart Data Lake Examples</name>
 
+	<profiles>
+	  <profile>
+		<id>jvm17</id>
+		<activation>
+			<jdk>17</jdk>
+		</activation>
+		<properties>
+			<jvm17.opens>--add-exports=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED
+				--add-opens=java.base/java.io=ALL-UNNAMED
+				--add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+				--add-opens=java.base/java.net=ALL-UNNAMED
+			</jvm17.opens>
+		</properties>
+	  </profile>
+	</profiles>
+
 	<properties>
-		<log4j2.version>2.17.1</log4j2.version>
+		<log4j2.version>2.20.0</log4j2.version>
 		<!-- default scala version - use predefined maven profiles to override -->
 		<scala.minor.version>2.12</scala.minor.version>
 		<scala.version>${scala.minor.version}.12</scala.version>
@@ -82,6 +98,18 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!-- check for dependency version conflicts -->
@@ -103,9 +131,16 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<!-- classpathScope>runtime</classpathScope -->
+							<!-- executable>java</executable -->
 							<arguments>
+								<argument>--add-exports=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED</argument>
+								<argument>--add-exports=java.base/sun.nio.ch=ALL-UNNAMED</argument>
+								<argument>--add-opens=java.base/java.io=ALL-UNNAMED</argument>
+								<argument>--add-opens=java.base/sun.nio.ch=ALL-UNNAMED</argument>
+							    <argument>--add-opens=java.base/java.net=ALL-UNNAMED</argument>
 								<argument>-classpath</argument>
-								<classpath/>
+								<argument>${project.build.directory}/${path.separator}${project.build.directory}/lib/*</argument>
 								<argument>io.smartdatalake.app.LocalSmartDataLakeBuilder</argument>
 								<argument>--feed-sel</argument>
 								<argument>.*</argument>
@@ -117,6 +152,9 @@
 				</executions>
 				<configuration>
 					<executable>java</executable>
+					<!--arguments>
+						<argument>${jvm17.opens}</argument>
+					</arguments -->
 					<workingDirectory>${project.build.directory}</workingDirectory>
 				</configuration>
 			</plugin>
@@ -208,7 +246,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>1.7.30</version>
+			<version>1.7.36</version>
 		</dependency>
 
 		<!-- override scope for spark dependencies to include/exclude them correctly for the fat-jar -->

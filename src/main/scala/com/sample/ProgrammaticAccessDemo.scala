@@ -13,7 +13,7 @@ object ProgrammaticAccessDemo extends App {
   val (registry, globalConfig) = ConfigToolbox.loadAndParseConfig(Seq("../src/main/resources"))
 
   // create spark session if not provided by environment
-  implicit val session: SparkSession = globalConfig.createSparkSession("test", Some("local[*]"))
+  implicit val session: SparkSession = globalConfig.sparkSession("test", Some("local[*]"))
   import session.implicits._
   implicit val context = TestUtil.getDefaultActionPipelineContext(registry)
 
@@ -21,7 +21,7 @@ object ProgrammaticAccessDemo extends App {
   val dataObject = registry.get[CsvFileDataObject]("ab-csv-org")
 
   // print schema and content
-  val df = dataObject.getDataFrame()
+  val df = dataObject.getSparkDataFrame()(context)
   df.printSchema
   df.show
 

@@ -1,6 +1,6 @@
 package com.sample
 
-import io.smartdatalake.workflow.action.customlogic.CustomDfCreator
+import io.smartdatalake.workflow.action.spark.customlogic.CustomDfCreator
 import org.apache.logging.log4j.scala.Logging
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
