@@ -12,6 +12,7 @@
     <option name="MAIN_CLASS_NAME" value="io.smartdatalake.app.LocalSmartDataLakeBuilder" />
     <module name="sdl-examples" />
     <option name="PROGRAM_PARAMETERS" value="-f .* -c $ProjectFileDir$/src/main/resources" />
+    <shortenClasspath name="ARGS_FILE" />
     <option name="VM_PARAMETERS" value="-Dio.netty.tryReflectionSetAccessible=true --add-exports=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED" />
     <option name="WORKING_DIRECTORY" value="target" />
     <method v="2">

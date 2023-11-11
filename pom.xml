@@ -296,6 +296,31 @@
 			<scope>${spark.deps.scope}</scope>
 		</dependency>
 
-	</dependencies>
+		<!-- ProgrammaticAccessDemo needs this -->
+		<dependency>
+			<groupId>org.apache.sshd</groupId>
+			<artifactId>sshd-core</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock-standalone</artifactId>
+			<version>2.25.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_${scala.minor.version}</artifactId>
+			<version>3.0.8</version>   <!-- 3.2.x breaks compatibility, 3.1.x unclear -->
+			<scope>compile</scope>    <!-- test is default, but we need it for ProgrammaticAccessDemo -->
+		</dependency>
+		<dependency>
+			<groupId>org.scalactic</groupId>
+			<artifactId>scalactic_${scala.minor.version}</artifactId>
+			<version>3.0.8</version>   <!-- 3.2.x breaks compatibility, 3.1.x unclear -->
+			<scope>compile</scope>    <!-- test is default, but we need it for ProgrammaticAccessDemo -->
+		</dependency>
+
+
+</dependencies>
 
 </project>
